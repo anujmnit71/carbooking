@@ -9,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.UUID;
 
 /**
@@ -34,23 +35,21 @@ public class Booking implements Serializable {
 
     @NotNull
     @Column(name = "start_date")
-    private LocalDate startDate;
+    private ZonedDateTime startDate;
 
     @NotNull
     @Column(name = "end_date")
-    private LocalDate endDate;
+    private ZonedDateTime endDate;
 
     @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private BookingStatus status;
 
-    @ManyToOne
-    @JoinColumn(name = "car_id")
-    private Car car;
+    @NotNull
+    private String userId;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @NotNull
+    private String carId;
 
 }

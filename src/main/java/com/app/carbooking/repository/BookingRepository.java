@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,5 +19,5 @@ public interface BookingRepository extends JpaRepository<Booking, UUID> {
             + "where b.startDate <= :endDate and b.endDate >= :startDate "
             + "and (b.status = 'BOOKED' or b.status = 'ONGOING') "
             + "order by b.startDate asc ")
-    List<Booking> findOverlapBooking(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+    List<Booking> findOverlapBooking(@Param("startDate") ZonedDateTime startDate, @Param("endDate") ZonedDateTime endDate);
 }

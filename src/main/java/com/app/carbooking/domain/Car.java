@@ -28,7 +28,7 @@ public class Car implements Serializable {
 
     @NotNull
     @Column(name = "price_per_hour", nullable = false)
-    private Integer pricePerHour;
+    private Integer pricePerDay;
 
 //    @NotNull
 //    @Column(name = "car_license_no", nullable = false)

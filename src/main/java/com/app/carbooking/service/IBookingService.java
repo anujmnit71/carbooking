@@ -1,15 +1,19 @@
 package com.app.carbooking.service;
 
+import com.app.carbooking.controller.requests.CreateBookingRequest;
 import com.app.carbooking.service.dto.BookingDTO;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.constraints.Future;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
 public interface IBookingService {
-    BookingDTO createBooking(BookingDTO bookingRequest);
+    BookingDTO createBooking(CreateBookingRequest bookingRequest);
 
     BookingDTO findBookingById(UUID id);
 
@@ -23,5 +27,5 @@ public interface IBookingService {
 
     List<BookingDTO> findAll();
 
-    Set<LocalDate> findAvailableDates(@Future LocalDate startDate, @Future LocalDate endDate);
+    Set<ZonedDateTime> findAvailableDates(@Future ZonedDateTime startDate, @Future ZonedDateTime endDate);
 }

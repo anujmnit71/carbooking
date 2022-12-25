@@ -1,11 +1,14 @@
 package com.app.carbooking.service.dto;
 
 import com.app.carbooking.domain.enumeration.BookingStatus;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
+import java.util.UUID;
 
 /**
  * A DTO for the {@link com.app.carbooking.domain.Booking} entity.
@@ -14,22 +17,24 @@ import java.time.LocalDate;
 public class BookingDTO implements Serializable {
 
     @NotNull
-    private String bookingId;
+    private UUID bookingId;
 
     @NotNull
     private Integer amount;
 
     @NotNull
-    private LocalDate startDate;
+    private ZonedDateTime startDate;
 
     @NotNull
-    private LocalDate endDate;
+    private ZonedDateTime endDate;
 
     @NotNull
     private BookingStatus status;
 
-    private UserDTO userId;
+    @NotNull
+    private String userId;
 
-    private CarDTO carId;
+    @NotNull
+    private String carId;
 
 }

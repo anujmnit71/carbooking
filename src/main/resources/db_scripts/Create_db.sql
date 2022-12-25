@@ -29,12 +29,14 @@ CREATE TABLE IF NOT EXISTS BOOKING (
 -- Use btree_gist extension to add no overlapping constraint
 CREATE EXTENSION btree_gist;
 
--- Don't allow overlapping bookings
+-- Don't allow overlapping bookings for ongoing or booked bookings
 ALTER TABLE BOOKING
 ADD CONSTRAINT  overlapping_booking
 EXCLUDE USING gist (
+    car_id WITH =,
     DATERANGE(start_date, end_date, '[]') WITH &&
-);
+)
+where (status = 'BOOKED' or status = 'ONGOING');
 
 ALTER TABLE BOOKING
 ADD CONSTRAINT fk_booking_user_id

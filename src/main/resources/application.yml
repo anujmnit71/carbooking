@@ -3,9 +3,13 @@ spring:
     name: carbooking
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/
+    url: jdbc:postgresql://localhost:5432/carbooking?currentSchema=rental
     username: root
     password: root
+  jackson:
+    serialization.indent_output: true
+    serialization.WRITE_DATES_AS_TIMESTAMPS: false
+    deserialization.ADJUST_DATES_TO_CONTEXT_TIME_ZONE: false
   jpa:
     show-sql: 'true'
     hibernate:

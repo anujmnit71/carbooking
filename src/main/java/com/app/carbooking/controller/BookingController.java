@@ -1,16 +1,17 @@
 package com.app.carbooking.controller;
 
+import com.app.carbooking.controller.requests.CreateBookingRequest;
 import com.app.carbooking.service.BookingService;
 import com.app.carbooking.service.dto.BookingDTO;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.time.LocalDate;
+import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -26,7 +27,7 @@ public class BookingController {
     }
 
     @PostMapping
-    public ResponseEntity<BookingDTO> createBooking(@RequestBody @Valid BookingDTO bookingRequest) {
+    public ResponseEntity<BookingDTO> createBooking(@RequestBody @Valid CreateBookingRequest bookingRequest) {
         log.debug("Create booking {}", bookingRequest);
         BookingDTO BookingDTO = bookingService.createBooking(bookingRequest);
         return ResponseEntity.created(URI.create("/api/v1/bookings/" + BookingDTO.getBookingId())).body(BookingDTO);
@@ -39,6 +40,13 @@ public class BookingController {
         return new ResponseEntity<>(booking, HttpStatus.OK);
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<BookingDTO>> getAllBooking() {
+        log.debug("Get all bookings");
+        List<BookingDTO> bookings = bookingService.findAll();
+        return new ResponseEntity<>(bookings, HttpStatus.OK);
+    }
+
     @PutMapping(value = "/{id}")
     public ResponseEntity<BookingDTO> updateBooking(@PathVariable("id") UUID id,
                                                     @RequestBody @Valid BookingDTO bookingRequest) {
@@ -48,20 +56,20 @@ public class BookingController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> cancelBooking(@PathVariable("id") UUID id) {
+    public ResponseEntity<BookingDTO> cancelBooking(@PathVariable("id") UUID id) {
         log.debug("Cancel booking for id {}", id);
-        bookingService.cancelBooking(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        BookingDTO bookingDTO = bookingService.cancelBooking(id);
+        return new ResponseEntity<>(bookingDTO, HttpStatus.OK);
     }
 
-    @PutMapping(value = "/pickup/{id}")
+    @PutMapping(value = "/pickupCar/{id}")
     public ResponseEntity<BookingDTO> pickUpBooking(@PathVariable("id") UUID id) {
         log.debug("Picking up booking for id {}", id);
         BookingDTO bookingDTO = bookingService.pickUpBooking(id);
         return new ResponseEntity<>(bookingDTO, HttpStatus.OK);
     }
 
-    @PutMapping(value = "/return/{id}")
+    @PutMapping(value = "/returnCar/{id}")
     public ResponseEntity<BookingDTO> returnBooking(@PathVariable("id") UUID id) {
         log.debug("Return booking for id {}", id);
         BookingDTO bookingDTO = bookingService.returnBooking(id);
@@ -69,9 +77,9 @@ public class BookingController {
     }
 
     @GetMapping("/availabilities")
-    public ResponseEntity<Set<LocalDate>> getReservation(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+    public ResponseEntity<Set<ZonedDateTime>> getReservation(
+            @RequestParam ZonedDateTime startDate,
+            @RequestParam ZonedDateTime endDate) {
         log.debug("Find availabilities between {} and {}", startDate, endDate);
         return ResponseEntity.ok(bookingService.findAvailableDates(startDate, endDate));
     }

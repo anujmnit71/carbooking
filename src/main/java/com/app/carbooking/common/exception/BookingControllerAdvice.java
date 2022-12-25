@@ -68,6 +68,17 @@ public class BookingControllerAdvice {
         return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
     }
 
+    @ExceptionHandler(CarNotFoundException.class)
+    public ResponseEntity<Object> handleCarNotFoundException(CarNotFoundException ex) {
+        HttpError apiError = new HttpError(HttpStatus.NOT_FOUND, ex.getMessage());
+        return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
+    }
+
+    @ExceptionHandler(InvalidBookingStateException.class)
+    public ResponseEntity<Object> handleInvalidBookingStateException(InvalidBookingStateException ex) {
+        HttpError apiError = new HttpError(HttpStatus.BAD_REQUEST, ex.getMessage());
+        return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
+    }
 
     private String createErrorMessage(String fieldName, String message) {
         return String.format("Field: %s, message: %s", fieldName, message);
