@@ -13,7 +13,7 @@ import java.time.ZonedDateTime;
 @AllArgsConstructor
 @ToString
 @ValidStartEndDate
-public class CreateBookingRequest implements BookingRequestBody {
+public class EditBookingRequest implements BookingRequestBody{
 
     @NotNull
     @Future
@@ -22,10 +22,4 @@ public class CreateBookingRequest implements BookingRequestBody {
     @NotNull
     @Future
     private ZonedDateTime endDate;
-
-    @NotNull
-    private String car_id;
-
-    @NotNull
-    private String user_id;
 }

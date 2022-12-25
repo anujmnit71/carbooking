@@ -1,6 +1,7 @@
 package com.app.carbooking.controller;
 
 import com.app.carbooking.controller.requests.CreateBookingRequest;
+import com.app.carbooking.controller.requests.EditBookingRequest;
 import com.app.carbooking.service.BookingService;
 import com.app.carbooking.service.dto.BookingDTO;
 import lombok.extern.slf4j.Slf4j;
@@ -49,9 +50,9 @@ public class BookingController {
 
     @PutMapping(value = "/{id}")
     public ResponseEntity<BookingDTO> updateBooking(@PathVariable("id") UUID id,
-                                                    @RequestBody @Valid BookingDTO bookingRequest) {
-        log.debug("Update booking with id {} and payload: {}", id, bookingRequest);
-        BookingDTO BookingDTO = bookingService.updateBooking(id, bookingRequest);
+                                                    @RequestBody @Valid EditBookingRequest editBookingRequest) {
+        log.debug("Update booking with id {} and payload: {}", id, editBookingRequest);
+        BookingDTO BookingDTO = bookingService.updateBooking(id, editBookingRequest);
         return new ResponseEntity<>(BookingDTO, HttpStatus.OK);
     }
 

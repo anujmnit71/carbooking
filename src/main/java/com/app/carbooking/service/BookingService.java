@@ -4,6 +4,7 @@ import com.app.carbooking.common.exception.BookingNotFoundException;
 import com.app.carbooking.common.exception.CarNotFoundException;
 import com.app.carbooking.common.exception.InvalidBookingStateException;
 import com.app.carbooking.controller.requests.CreateBookingRequest;
+import com.app.carbooking.controller.requests.EditBookingRequest;
 import com.app.carbooking.domain.Booking;
 import com.app.carbooking.domain.Car;
 import com.app.carbooking.domain.enumeration.BookingStatus;
@@ -76,10 +77,10 @@ public class BookingService implements IBookingService {
 
     @Override
     @Transactional(isolation = Isolation.REPEATABLE_READ)
-    public BookingDTO updateBooking(UUID id, BookingDTO bookingRequest) {
+    public BookingDTO updateBooking(UUID id, EditBookingRequest editBookingRequest) {
         Booking booking = bookingRepository.findById(id).orElseThrow(() -> new BookingNotFoundException(id));
-        booking.setStartDate(bookingRequest.getStartDate());
-        booking.setEndDate(bookingRequest.getEndDate());
+        booking.setStartDate(editBookingRequest.getStartDate());
+        booking.setEndDate(editBookingRequest.getEndDate());
         return modelMapper.map(bookingRepository.save(booking), BookingDTO.class);
     }
 

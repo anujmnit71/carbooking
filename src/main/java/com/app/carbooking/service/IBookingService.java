@@ -1,6 +1,7 @@
 package com.app.carbooking.service;
 
 import com.app.carbooking.controller.requests.CreateBookingRequest;
+import com.app.carbooking.controller.requests.EditBookingRequest;
 import com.app.carbooking.service.dto.BookingDTO;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +18,7 @@ public interface IBookingService {
 
     BookingDTO findBookingById(UUID id);
 
-    BookingDTO updateBooking(UUID id, BookingDTO bookingRequest);
+    BookingDTO updateBooking(UUID id, EditBookingRequest editBookingRequest);
 
     BookingDTO cancelBooking(UUID id);
 
