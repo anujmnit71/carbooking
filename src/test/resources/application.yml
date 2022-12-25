@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: carbooking
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:h2:~/test;AUTO_SERVER=TRUE
+    username: root
+    password: root
+  jackson:
+    serialization.indent_output: true
+    serialization.WRITE_DATES_AS_TIMESTAMPS: false
+    deserialization.ADJUST_DATES_TO_CONTEXT_TIME_ZONE: false
+  jpa:
+    show-sql: 'true'
+    hibernate:
+      ddl-auto: create
+      dialect: org.hibernate.dialect.PostgreSQLDialect
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
