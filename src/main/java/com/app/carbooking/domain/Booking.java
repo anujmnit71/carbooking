@@ -4,6 +4,7 @@ import com.app.carbooking.domain.enumeration.BookingStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -16,8 +17,9 @@ import java.util.UUID;
  * Booking: represents booking of a car by a user.
  */
 @Entity
-@Table(name = "booking", schema = "rental")
+@Table(name = "booking")
 @Data
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class Booking implements Serializable {

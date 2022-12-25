@@ -3,7 +3,7 @@ spring:
     name: carbooking
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/carbooking?currentSchema=rental
+    url: jdbc:postgresql://localhost:5432/carbooking
     username: root
     password: root
   jackson:

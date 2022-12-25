@@ -1,8 +1,6 @@
 package com.app.carbooking.controller.requests;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
@@ -11,6 +9,8 @@ import java.time.ZonedDateTime;
 @Getter
 @Setter
 @RequiredArgsConstructor
+@AllArgsConstructor
+@ToString
 public class CreateBookingRequest {
 
     @NotNull

@@ -2,7 +2,9 @@ package com.app.carbooking.service.dto;
 
 import com.app.carbooking.domain.enumeration.BookingStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -14,6 +16,8 @@ import java.util.UUID;
  * A DTO for the {@link com.app.carbooking.domain.Booking} entity.
  */
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class BookingDTO implements Serializable {
 
     @NotNull

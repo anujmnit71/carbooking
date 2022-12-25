@@ -23,6 +23,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -60,6 +61,8 @@ public class BookingService implements IBookingService {
 
         newBooking.setUserId(bookingRequest.getUser_id());
         newBooking.setCarId(car_id);
+        newBooking.setStartDate(bookingRequest.getStartDate().truncatedTo(ChronoUnit.HOURS));
+        newBooking.setEndDate(bookingRequest.getEndDate().truncatedTo(ChronoUnit.HOURS));
         Booking booking = bookingRepository.save(newBooking);
         return modelMapper.map(booking, BookingDTO.class);
     }
