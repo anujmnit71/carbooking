@@ -1,9 +1,9 @@
-#Car Booking App
+# Car Booking App
 
-##Pre-requisite  
+## Pre-requisite  
 java17 , postgres:11-alpine
 
-##How to run
+## How to run
 1) compile  
 ```mvn clean compile```
 
@@ -25,7 +25,7 @@ To add boilerplate data ,can use fakeData in
 ```data/sample-data.csv```
 Copy data to fakeData.csv and use copy-data.sql from psql to inject data. 
 
-##Design
+## Design
 App has 3 entities  
 - Car : represents Car which can be booked   
 (can be generalized for other vehicles but just kept car to keep things simple)  
