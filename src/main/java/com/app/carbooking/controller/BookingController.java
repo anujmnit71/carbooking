@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 @RestController
@@ -31,7 +29,7 @@ public class BookingController {
 
     /**
      * Book a car
-    **/
+     **/
     @PostMapping
     public ResponseEntity<BookingDTO> createBooking(@RequestBody @Valid CreateBookingRequest bookingRequest) {
         log.debug("Create booking {}", bookingRequest);
@@ -41,7 +39,7 @@ public class BookingController {
 
     /**
      * Get Booking details
-    **/
+     **/
     @GetMapping("/{id}")
     public ResponseEntity<BookingDTO> getBooking(@PathVariable("id") UUID id) {
         log.debug("Get booking for id {}", id);
@@ -51,7 +49,7 @@ public class BookingController {
 
     /**
      * Get all Booking details
-    **/
+     **/
     @GetMapping("/all")
     public ResponseEntity<List<BookingDTO>> getAllBooking() {
         log.debug("Get all bookings");
@@ -60,8 +58,8 @@ public class BookingController {
     }
 
     /**
-     *   Edit a booking start and end date
-    **/
+     * Edit a booking start and end date
+     **/
     @PutMapping(value = "/{id}")
     public ResponseEntity<BookingDTO> updateBooking(@PathVariable("id") UUID id,
                                                     @RequestBody @Valid EditBookingRequest editBookingRequest) {
@@ -71,8 +69,8 @@ public class BookingController {
     }
 
     /**
-     *  Cancel a booking
-    **/
+     * Cancel a booking state : BOOKED/CANCELLED -> CANCELLED
+     **/
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<BookingDTO> cancelBooking(@PathVariable("id") UUID id) {
         log.debug("Cancel booking for id {}", id);
@@ -81,8 +79,8 @@ public class BookingController {
     }
 
     /**
-     *  Pick up car , this will move booking state to ONGOING
-    **/
+     * Pick up car , this will move state : BOOKED -> ONGOING
+     **/
     @PutMapping(value = "/pickupCar/{id}")
     public ResponseEntity<BookingDTO> pickUpBooking(@PathVariable("id") UUID id) {
         log.debug("Picking up booking for id {}", id);
@@ -91,8 +89,8 @@ public class BookingController {
     }
 
     /**
-     * Return car , this will move booking state to COMPLETED
-    **/
+     * Return car , this will move state : ONGOING/COMPLETED -> COMPLETED
+     **/
     @PutMapping(value = "/returnCar/{id}")
     public ResponseEntity<BookingDTO> returnBooking(@PathVariable("id") UUID id) {
         log.debug("Return booking for id {}", id);
@@ -107,7 +105,7 @@ public class BookingController {
     public ResponseEntity<List<Car>> getAvailableCars(
             @RequestBody Slot slot) {
         log.debug("Find availabilities cars between {} and {}", slot.getStartDate(), slot.getEndDate());
-        return ResponseEntity.ok(bookingService.findAvailableCars(slot.getStartDate(),slot.getEndDate()));
+        return ResponseEntity.ok(bookingService.findAvailableCars(slot.getStartDate(), slot.getEndDate()));
     }
 
 }

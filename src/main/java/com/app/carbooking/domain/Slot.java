@@ -10,7 +10,7 @@ import java.time.ZonedDateTime;
  */
 @Data
 @ToString
-public class Slot{
+public class Slot {
     private ZonedDateTime startDate;
     private ZonedDateTime endDate;
 }
