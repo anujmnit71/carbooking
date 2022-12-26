@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS USER_ACCOUNT (
 
 CREATE TABLE IF NOT EXISTS CAR (
     car_id            VARCHAR(255) NOT NULL,
-    price_per_hour    INT NOT NULL,
+    price_per_day    INT NOT NULL,
     PRIMARY KEY (car_id)
 );
 

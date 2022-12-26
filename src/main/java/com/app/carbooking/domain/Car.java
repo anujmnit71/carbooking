@@ -28,7 +28,7 @@ public class Car implements Serializable {
     private String carId;
 
     @NotNull
-    @Column(name = "price_per_hour", nullable = false)
+    @Column(name = "price_per_day", nullable = false)
     private Integer pricePerDay;
 
 //    @NotNull

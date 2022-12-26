@@ -2,6 +2,8 @@ package com.app.carbooking.controller;
 
 import com.app.carbooking.controller.requests.CreateBookingRequest;
 import com.app.carbooking.controller.requests.EditBookingRequest;
+import com.app.carbooking.domain.Car;
+import com.app.carbooking.domain.Slot;
 import com.app.carbooking.service.BookingService;
 import com.app.carbooking.service.dto.BookingDTO;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +29,9 @@ public class BookingController {
         this.bookingService = bookingService;
     }
 
+    /**
+     * Book a car
+    **/
     @PostMapping
     public ResponseEntity<BookingDTO> createBooking(@RequestBody @Valid CreateBookingRequest bookingRequest) {
         log.debug("Create booking {}", bookingRequest);
@@ -34,6 +39,9 @@ public class BookingController {
         return ResponseEntity.created(URI.create("/api/v1/bookings/" + BookingDTO.getBookingId())).body(BookingDTO);
     }
 
+    /**
+     * Get Booking details
+    **/
     @GetMapping("/{id}")
     public ResponseEntity<BookingDTO> getBooking(@PathVariable("id") UUID id) {
         log.debug("Get booking for id {}", id);
@@ -41,6 +49,9 @@ public class BookingController {
         return new ResponseEntity<>(booking, HttpStatus.OK);
     }
 
+    /**
+     * Get all Booking details
+    **/
     @GetMapping("/all")
     public ResponseEntity<List<BookingDTO>> getAllBooking() {
         log.debug("Get all bookings");
@@ -48,6 +59,9 @@ public class BookingController {
         return new ResponseEntity<>(bookings, HttpStatus.OK);
     }
 
+    /**
+     *   Edit a booking start and end date
+    **/
     @PutMapping(value = "/{id}")
     public ResponseEntity<BookingDTO> updateBooking(@PathVariable("id") UUID id,
                                                     @RequestBody @Valid EditBookingRequest editBookingRequest) {
@@ -56,6 +70,9 @@ public class BookingController {
         return new ResponseEntity<>(BookingDTO, HttpStatus.OK);
     }
 
+    /**
+     *  Cancel a booking
+    **/
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<BookingDTO> cancelBooking(@PathVariable("id") UUID id) {
         log.debug("Cancel booking for id {}", id);
@@ -63,6 +80,9 @@ public class BookingController {
         return new ResponseEntity<>(bookingDTO, HttpStatus.OK);
     }
 
+    /**
+     *  Pick up car , this will move booking state to ONGOING
+    **/
     @PutMapping(value = "/pickupCar/{id}")
     public ResponseEntity<BookingDTO> pickUpBooking(@PathVariable("id") UUID id) {
         log.debug("Picking up booking for id {}", id);
@@ -70,6 +90,9 @@ public class BookingController {
         return new ResponseEntity<>(bookingDTO, HttpStatus.OK);
     }
 
+    /**
+     * Return car , this will move booking state to COMPLETED
+    **/
     @PutMapping(value = "/returnCar/{id}")
     public ResponseEntity<BookingDTO> returnBooking(@PathVariable("id") UUID id) {
         log.debug("Return booking for id {}", id);
@@ -77,11 +100,24 @@ public class BookingController {
         return new ResponseEntity<>(bookingDTO, HttpStatus.OK);
     }
 
+    /**
+     * Return all available slots for a given start and end date
+    **/
     @GetMapping("/availabilities")
-    public ResponseEntity<Set<ZonedDateTime>> getReservation(
-            @RequestParam ZonedDateTime startDate,
-            @RequestParam ZonedDateTime endDate) {
-        log.debug("Find availabilities between {} and {}", startDate, endDate);
-        return ResponseEntity.ok(bookingService.findAvailableDates(startDate, endDate));
+    public ResponseEntity<Set<ZonedDateTime>> getAvailable(
+            @RequestBody Slot slot) {
+        log.debug("Find availabilities between {} and {}", slot.getStartDate(), slot.getEndDate());
+        return ResponseEntity.ok(bookingService.findAvailableDates(slot.getStartDate(),slot.getEndDate()));
     }
+
+    /**
+     * Return all available cars for a given start and end date
+     **/
+    @GetMapping("/availableCars")
+    public ResponseEntity<List<Car>> getAvailableCars(
+            @RequestBody Slot slot) {
+        log.debug("Find availabilities cars between {} and {}", slot.getStartDate(), slot.getEndDate());
+        return ResponseEntity.ok(bookingService.findAvailableCars(slot.getStartDate(),slot.getEndDate()));
+    }
+
 }

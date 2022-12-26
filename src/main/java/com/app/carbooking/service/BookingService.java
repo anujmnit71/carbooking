@@ -152,4 +152,14 @@ public class BookingService implements IBookingService {
         return allBookings;
     }
 
+    @Transactional(readOnly = true)
+    public List<Car> findAvailableCars(@Future ZonedDateTime startDate, @Future ZonedDateTime endDate) {
+        Assert.isTrue(startDate.isBefore(endDate), "start date must be before end date");
+
+        List<Car> availableCars = bookingRepository.findAvailableCars(startDate, endDate);
+        log.info("Available cars: {}", availableCars);
+        return availableCars;
+    }
+
+
 }
