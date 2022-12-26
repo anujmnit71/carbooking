@@ -11,7 +11,7 @@ spring:
     serialization.WRITE_DATES_AS_TIMESTAMPS: false
     deserialization.ADJUST_DATES_TO_CONTEXT_TIME_ZONE: false
   jpa:
-    show-sql: 'true'
+    show-sql: 'false'
     hibernate:
       ddl-auto: create
       dialect: org.hibernate.dialect.PostgreSQLDialect

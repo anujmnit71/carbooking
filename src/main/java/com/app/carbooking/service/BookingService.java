@@ -134,25 +134,6 @@ public class BookingService implements IBookingService {
 
     @Override
     @Transactional(readOnly = true)
-    public Set<ZonedDateTime> findAvailableDates(@Future ZonedDateTime startDate, @Future ZonedDateTime endDate) {
-        Assert.isTrue(startDate.isBefore(endDate), "start date must be before end date");
-
-        List<Booking> overlapBooking = bookingRepository.findOverlapBooking(startDate, endDate);
-        log.debug("Overlap bookings: {}", overlapBooking);
-        Set<ZonedDateTime> allBookings = startDate.toLocalDate().datesUntil(endDate.toLocalDate().plusDays(1))
-                .map(date -> date.atStartOfDay(ZoneId.systemDefault()))
-                .collect(Collectors.toCollection(TreeSet::new));
-        //Remove all overlapping booking
-        overlapBooking.forEach(overlap -> {
-            LocalDate st = overlap.getStartDate().toLocalDate();
-            LocalDate end = overlap.getEndDate().toLocalDate();
-            allBookings.removeAll(st.datesUntil(end).collect(Collectors.toList()));
-        });
-        log.info("Available bookings: {}", allBookings);
-        return allBookings;
-    }
-
-    @Transactional(readOnly = true)
     public List<Car> findAvailableCars(@Future ZonedDateTime startDate, @Future ZonedDateTime endDate) {
         Assert.isTrue(startDate.isBefore(endDate), "start date must be before end date");
 

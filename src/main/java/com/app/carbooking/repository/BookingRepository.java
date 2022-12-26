@@ -17,25 +17,17 @@ import java.util.UUID;
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, UUID> {
     @Query(value = """
-              select * from booking b
-              where b.start_date <= :endDate and b.end_date >= :startDate
-              and (b.status = 'BOOKED' or b.status = 'ONGOING')
-              order by b.start_date asc
-            """,nativeQuery = true)
-    List<Booking> findOverlapBooking(@Param("startDate") ZonedDateTime startDate, @Param("endDate") ZonedDateTime endDate);
-
-    @Query(value = """
-            select * from car c
-            where c.car_id not in
+            select c from Car c
+            where c.carId not in
                 (
-                  select b.car_id
-                  from booking b
+                  select b.carId
+                  from Booking b
                   where (b.status = 'BOOKED' or b.status = 'ONGOING')
                   and
-                  (b.end_date > :endDate and b.start_date < :startDate)
+                  (b.endDate > :startDate and b.startDate < :endDate)
                  )
-            order by price_per_day asc
+            order by pricePerDay asc
             """
-    ,nativeQuery = false)
+    )
     List<Car> findAvailableCars(@Param("startDate") ZonedDateTime startDate, @Param("endDate") ZonedDateTime endDate);
 }

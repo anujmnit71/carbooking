@@ -38,21 +38,4 @@ class BookingRepositoryTest {
         List<Booking> bookingList = bookingRepository.findAll();
         assertThat(bookingList.size()).isEqualTo(2);
     }
-
-    @Test
-    public void shouldReturnOverlapBooking() {
-        bookingRepository.save(new Booking(UUID.randomUUID(), 10,
-                ZonedDateTime.now().plusDays(1), ZonedDateTime.now().plusDays(2), BookingStatus.BOOKED, "u1", "c1"));
-
-        bookingRepository.save(new Booking(UUID.randomUUID(), 10,
-                ZonedDateTime.now().plusDays(3), ZonedDateTime.now().plusDays(4), BookingStatus.BOOKED, "u1", "c1"));
-
-        bookingRepository.save(new Booking(UUID.randomUUID(), 10,
-                ZonedDateTime.now().plusDays(5), ZonedDateTime.now().plusDays(6), BookingStatus.BOOKED, "u1", "c1"));
-
-        List<Booking> bookingList = bookingRepository.findOverlapBooking(ZonedDateTime.now().plusDays(1), ZonedDateTime.now().plusDays(4));
-        assertThat(bookingList.size()).isEqualTo(2);
-    }
-
-
 }

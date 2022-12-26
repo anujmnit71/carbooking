@@ -101,16 +101,6 @@ public class BookingController {
     }
 
     /**
-     * Return all available slots for a given start and end date
-    **/
-    @GetMapping("/availabilities")
-    public ResponseEntity<Set<ZonedDateTime>> getAvailable(
-            @RequestBody Slot slot) {
-        log.debug("Find availabilities between {} and {}", slot.getStartDate(), slot.getEndDate());
-        return ResponseEntity.ok(bookingService.findAvailableDates(slot.getStartDate(),slot.getEndDate()));
-    }
-
-    /**
      * Return all available cars for a given start and end date
      **/
     @GetMapping("/availableCars")
