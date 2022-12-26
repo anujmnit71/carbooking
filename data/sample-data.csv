@@ -5,16 +5,8 @@ u3,user3
 u4,user4
 
 
-car_id,price_per_day
-c1,1
-c2,2
-c3,3
-c4,4
-
-
-
-booking_id,amount,start_date,end_date,status,car_id,user_id
-5f2842d1-64f7-4d75-a4d8-2c71f7aacafe,16182,2022-12-23,2022-12-24,ONGOING,c1,u1
-c5bbb5d0-51e7-4848-bb2e-e7560fb1f48e,9760,2022-12-23,2022-12-25,ONGOING,c2,u1
-4dd9df95-a35d-4053-b802-9fcdb8e43397,31263,2022-12-24,2022-12-26,COMPLETED,c3,u1
-1db9e1d6-fb90-492f-b269-80e2c9045a82,96315,2022-12-25,2022-12-26,ONGOING,c1,u1
+car_id,price_per_day,model,seats
+c1,1,toyota,7
+c2,2,toyota,7
+c3,3,bmw,4
+c4,4,bmw,4

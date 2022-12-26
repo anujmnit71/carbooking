@@ -7,7 +7,7 @@
         </encoder>
     </appender>
 
-    <logger name="com.app.carbooking" level="INFO" additivity="false">
+    <logger name="com.app.carbooking" level="DEBUG" additivity="false">
         <appender-ref ref="CONSOLE"/>
     </logger>
     <root level="WARN">

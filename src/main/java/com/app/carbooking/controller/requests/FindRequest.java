@@ -1,17 +1,22 @@
 package com.app.carbooking.controller.requests;
 
 import com.app.carbooking.common.validation.ValidStartEndDate;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.ToString;
 
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
 
+/**
+ * Slot
+ */
 @Data
 @AllArgsConstructor
 @ValidStartEndDate
-public class CreateBookingRequest implements BookingRequestBody {
-
+public class FindRequest implements BookingRequestBody {
+    public static final String DEFAULT_MODEL = "toyota";
     @NotNull
     @Future
     private ZonedDateTime startDate;
@@ -20,9 +25,6 @@ public class CreateBookingRequest implements BookingRequestBody {
     @Future
     private ZonedDateTime endDate;
 
-    @NotNull
-    private String car_id;
-
-    @NotNull
-    private String user_id;
+    private String model;
+    private int seats;
 }

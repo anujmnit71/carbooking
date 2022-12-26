@@ -18,7 +18,9 @@ import java.util.UUID;
 public interface BookingRepository extends JpaRepository<Booking, UUID> {
     @Query(value = """
             select c from Car c
-            where c.carId not in
+            where c.seats >= :seats and c.model = :model
+            and
+            c.carId not in
                 (
                   select b.carId
                   from Booking b
@@ -29,5 +31,8 @@ public interface BookingRepository extends JpaRepository<Booking, UUID> {
             order by pricePerDay asc
             """
     )
-    List<Car> findAvailableCars(@Param("startDate") ZonedDateTime startDate, @Param("endDate") ZonedDateTime endDate);
+    List<Car> findAvailableCars(@Param("startDate") ZonedDateTime startDate,
+                                @Param("endDate") ZonedDateTime endDate,
+                                @Param("model") String model,
+                                @Param("seats") Integer seats);
 }

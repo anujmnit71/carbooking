@@ -34,6 +34,14 @@ public class Car implements Serializable {
     @Column(name = "price_per_day", nullable = false)
     private Integer pricePerDay;
 
+    @NotNull
+    @Column(name = "model", nullable = false)
+    private String model;
+
+    @NotNull
+    @Column(name = "seats", nullable = false)
+    private Integer seats;
+
 //    @NotNull
 //    @Column(name = "car_license_no", nullable = false)
 //    private String carLicenseNo;
@@ -42,9 +50,7 @@ public class Car implements Serializable {
 //    @Column(name = "kms_driven", nullable = false)
 //    private Integer kmsDriven;
 //
-//    @NotNull
-//    @Column(name = "seats", nullable = false)
-//    private Integer seats;
+
 //
 //    @NotNull
 //    @Enumerated(EnumType.STRING)

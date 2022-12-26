@@ -3,10 +3,9 @@ package com.app.carbooking.service;
 import com.app.carbooking.controller.requests.CreateBookingRequest;
 import com.app.carbooking.controller.requests.EditBookingRequest;
 import com.app.carbooking.domain.Car;
+import com.app.carbooking.controller.requests.FindRequest;
 import com.app.carbooking.service.dto.BookingDTO;
 
-import javax.validation.constraints.Future;
-import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,6 +24,6 @@ public interface IBookingService {
 
     List<BookingDTO> findAll();
 
-    List<Car> findAvailableCars(@Future ZonedDateTime startDate, @Future ZonedDateTime endDate);
+    List<Car> findAvailableCars(FindRequest findRequest);
 
 }

@@ -11,8 +11,10 @@ CREATE TABLE IF NOT EXISTS USER_ACCOUNT (
 );
 
 CREATE TABLE IF NOT EXISTS CAR (
-    car_id            VARCHAR(255) NOT NULL,
+    car_id           VARCHAR(255) NOT NULL,
     price_per_day    INT NOT NULL,
+    model            VARCHAR(255) NOT NULL,
+    seats            INT NOT NULL,
     PRIMARY KEY (car_id)
 );
 
@@ -31,11 +33,12 @@ CREATE TABLE IF NOT EXISTS BOOKING (
 CREATE EXTENSION btree_gist;
 
 -- Don't allow overlapping bookings for ongoing or booked bookings
+-- '[)' : checkout date exclusive so that next day booking is allowed
 ALTER TABLE BOOKING
 ADD CONSTRAINT  overlapping_booking
 EXCLUDE USING gist (
     car_id WITH =,
-    DATERANGE(start_date, end_date, '[]') WITH &&
+    DATERANGE(start_date, end_date, '[)') WITH &&
 )
 where (status = 'BOOKED' or status = 'ONGOING');
 

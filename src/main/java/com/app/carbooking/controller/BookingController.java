@@ -3,7 +3,7 @@ package com.app.carbooking.controller;
 import com.app.carbooking.controller.requests.CreateBookingRequest;
 import com.app.carbooking.controller.requests.EditBookingRequest;
 import com.app.carbooking.domain.Car;
-import com.app.carbooking.domain.Slot;
+import com.app.carbooking.controller.requests.FindRequest;
 import com.app.carbooking.service.BookingService;
 import com.app.carbooking.service.dto.BookingDTO;
 import lombok.extern.slf4j.Slf4j;
@@ -103,9 +103,9 @@ public class BookingController {
      **/
     @GetMapping("/availableCars")
     public ResponseEntity<List<Car>> getAvailableCars(
-            @RequestBody Slot slot) {
-        log.debug("Find availabilities cars between {} and {}", slot.getStartDate(), slot.getEndDate());
-        return ResponseEntity.ok(bookingService.findAvailableCars(slot.getStartDate(), slot.getEndDate()));
+            @RequestBody FindRequest findRequest) {
+        log.debug("Find available cars between {} and {}", findRequest.getStartDate(), findRequest.getEndDate());
+        return ResponseEntity.ok(bookingService.findAvailableCars(findRequest));
     }
 
 }

@@ -7,6 +7,7 @@ import com.app.carbooking.controller.requests.CreateBookingRequest;
 import com.app.carbooking.controller.requests.EditBookingRequest;
 import com.app.carbooking.domain.Booking;
 import com.app.carbooking.domain.Car;
+import com.app.carbooking.controller.requests.FindRequest;
 import com.app.carbooking.domain.enumeration.BookingStatus;
 import com.app.carbooking.repository.BookingRepository;
 import com.app.carbooking.repository.CarRepository;
@@ -19,7 +20,6 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import javax.validation.constraints.Future;
 import java.time.Duration;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
@@ -130,10 +130,15 @@ public class BookingService implements IBookingService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Car> findAvailableCars(@Future ZonedDateTime startDate, @Future ZonedDateTime endDate) {
+    public List<Car> findAvailableCars(FindRequest findRequest) {
+        ZonedDateTime startDate = findRequest.getStartDate();
+        ZonedDateTime endDate = findRequest.getEndDate();
+        String model = findRequest.getModel() != null ? findRequest.getModel() : FindRequest.DEFAULT_MODEL;
+        int seats = findRequest.getSeats();
+
         Assert.isTrue(startDate.isBefore(endDate), "start date must be before end date");
 
-        List<Car> availableCars = bookingRepository.findAvailableCars(startDate, endDate);
+        List<Car> availableCars = bookingRepository.findAvailableCars(startDate, endDate, model, seats);
         log.info("Available cars: {}", availableCars);
         return availableCars;
     }

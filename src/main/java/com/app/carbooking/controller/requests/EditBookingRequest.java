@@ -1,20 +1,18 @@
 package com.app.carbooking.controller.requests;
 
 import com.app.carbooking.common.validation.ValidStartEndDate;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import java.time.ZonedDateTime;
 
-@Getter
-@Setter
-@RequiredArgsConstructor
+
+@Data
 @AllArgsConstructor
-@ToString
 @ValidStartEndDate
 public class EditBookingRequest implements BookingRequestBody {
-
     @NotNull
     @Future
     private ZonedDateTime startDate;

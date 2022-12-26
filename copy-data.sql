@@ -1,1 +1,0 @@
-\COPY user_account(user_id,user_name) FROM 'data/fakedata.csv' DELIMITER ',' CSV HEADER;

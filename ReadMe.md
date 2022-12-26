@@ -61,7 +61,8 @@ where (status = 'BOOKED' or status = 'ONGOING');
 
 **Note** :
 Simplifications/Assumptions to keep things simple  
-- car : properties like petrol/diesel or auto/manual are not added 
+- car : properties like fuel type petrol/diesel or auto/manual are not added  
+This could be added without much change.
 - repository and service layer for Car and User is not added
 and data will be inserted directly in db using csv 
 - late fee is not considered (can be added easily)

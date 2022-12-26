@@ -6,10 +6,6 @@ spring:
     url: jdbc:postgresql://localhost:5432/carbooking
     username: root
     password: root
-  jackson:
-    serialization.indent_output: true
-    serialization.WRITE_DATES_AS_TIMESTAMPS: false
-    deserialization.ADJUST_DATES_TO_CONTEXT_TIME_ZONE: false
   jpa:
     show-sql: 'false'
     hibernate:
