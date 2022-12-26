@@ -1,0 +1,345 @@
+{
+	"info": {
+		"_postman_id": "ea176428-e519-4b3c-9657-ab490903ee0c",
+		"name": "car-booking",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "9683220"
+	},
+	"item": [
+		{
+			"name": "Create booking",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var duration = 2;",
+							"var moment = require('moment')",
+							"var st = moment(\"16-01-2023\", \"DD-MM-YYYY\")",
+							"var start = st.toISOString()",
+							"var end = st.add(duration,'days').toISOString()",
+							"pm.environment.set(\"start\", start)",
+							"pm.environment.set(\"end\", end )",
+							"console.log(\"start is \" + start);",
+							"console.log(\"end is \" + end);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"var sid = jsonData.bookingId;",
+							"pm.collectionVariables.set(\"b-id\", sid);",
+							"console.log(\"sid is \" + sid);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"startDate\":\"{{start}}\",\n    \"endDate\":\"{{end}}\",\n    \"car_id\":\"c3\",\n    \"user_id\":\"u1\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/{{path}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{path}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a booking",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/{{path}}/{{b-id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{path}}",
+						"{{b-id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit booking",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var st = 5;",
+							"var duration = 2;",
+							"var moment = require('moment')",
+							"var start = moment().add(st,'days').toISOString()",
+							"var end = moment().add(st + duration,'days').toISOString()",
+							"pm.environment.set(\"startNew\", start)",
+							"pm.environment.set(\"endNew\", end )",
+							"console.log(\"start is \" + start);",
+							"console.log(\"end is \" + end);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"startDate\":\"{{startNew}}\",\n    \"endDate\":\"{{endNew}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/{{path}}/{{b-id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{path}}",
+						"{{b-id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Pickup car",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/{{path}}/pickupCar/{{b-id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{path}}",
+						"pickupCar",
+						"{{b-id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Return Car",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/{{path}}/returnCar/{{b-id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{path}}",
+						"returnCar",
+						"{{b-id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cancel a booking",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/{{path}}/{{b-id}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{path}}",
+						"{{b-id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all bookings",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/{{path}}/all",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{path}}",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cancel all bookings",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonArrayData = pm.response.json();",
+							"console.log('total == ' + jsonArrayData.length)",
+							"for(var i =0 ; i< jsonArrayData.length; i++ )",
+							"{",
+							"    urlstr='http://localhost:8080/api/v1/bookings/' + jsonArrayData[i].bookingId",
+							"    // urlstr = url.concat(jsonArrayData[i].bookingid)",
+							"    console.log('url == ' + urlstr)",
+							"    pm.sendRequest({",
+							"        url: urlstr,",
+							"        method: 'DELETE'",
+							"    }, function (err, res) {",
+							"        console.log('res == ' + res);",
+							"    });",
+							"}"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/{{path}}/all",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{path}}",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get available cars",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var duration = 2;",
+							"var moment = require('moment')",
+							"var st = moment(\"14-01-2023\", \"DD-MM-YYYY\")",
+							"var start = st.toISOString()",
+							"var end = st.add(duration,'days').toISOString()",
+							"pm.environment.set(\"start\", start)",
+							"pm.environment.set(\"end\", end )",
+							"console.log(\"start is \" + start);",
+							"console.log(\"end is \" + end);",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"startDate\":\"{{start}}\",\n    \"endDate\":\"{{end}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/{{path}}/availableCars?startDate={{start}}&endDate={{end}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"{{path}}",
+						"availableCars"
+					],
+					"query": [
+						{
+							"key": "startDate",
+							"value": "{{start}}"
+						},
+						{
+							"key": "endDate",
+							"value": "{{end}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "path",
+			"value": "api/v1/bookings"
+		},
+		{
+			"key": "url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "b-id",
+			"value": "332e5295-da37-43f8-95b6-598085dc44f7",
+			"type": "string"
+		}
+	]
+}
