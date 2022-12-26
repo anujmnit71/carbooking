@@ -13,9 +13,9 @@
 					"listen": "prerequest",
 					"script": {
 						"exec": [
-							"var duration = 2;",
+							"var duration = 1;",
 							"var moment = require('moment')",
-							"var st = moment(\"16-01-2023\", \"DD-MM-YYYY\")",
+							"var st = moment.utc(\"08-01-2023\", \"DD-MM-YYYY\")",
 							"var start = st.toISOString()",
 							"var end = st.add(duration,'days').toISOString()",
 							"pm.environment.set(\"start\", start)",
@@ -92,8 +92,8 @@
 							"var st = 5;",
 							"var duration = 2;",
 							"var moment = require('moment')",
-							"var start = moment().add(st,'days').toISOString()",
-							"var end = moment().add(st + duration,'days').toISOString()",
+							"var start = moment.utc().add(st,'days').toISOString()",
+							"var end = moment.utc().add(st + duration,'days').toISOString()",
 							"pm.environment.set(\"startNew\", start)",
 							"pm.environment.set(\"endNew\", end )",
 							"console.log(\"start is \" + start);",
@@ -254,7 +254,7 @@
 						"exec": [
 							"var duration = 2;",
 							"var moment = require('moment')",
-							"var st = moment(\"14-01-2023\", \"DD-MM-YYYY\")",
+							"var st = moment.utc(\"10-01-2023\", \"DD-MM-YYYY\")",
 							"var start = st.toISOString()",
 							"var end = st.add(duration,'days').toISOString()",
 							"pm.environment.set(\"start\", start)",
@@ -275,7 +275,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"startDate\":\"{{start}}\",\n    \"endDate\":\"{{end}}\"\n}",
+					"raw": "{\n    \"startDate\":\"{{start}}\",\n    \"endDate\":\"{{end}}\",\n    \"model\":\"bmw\",\n    \"seats\":\"2\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
